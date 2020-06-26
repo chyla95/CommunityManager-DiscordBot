@@ -13,7 +13,7 @@ client.on('message', msg => {
 
 client.on('message', msg => {
   if (msg.content === '.ingoz') {
-    msg.reply('Ingoz is gay lol.');
+    msg.send('Ingoz is gay lol.');
   }
 });
 
