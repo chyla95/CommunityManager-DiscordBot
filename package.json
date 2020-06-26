@@ -1,10 +1,9 @@
 {
-  "name": "hd-support",
+  "name": "hunters-den",
   "version": "1.0.0",
   "description": "Hunter's Den Community support",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
   },
   "author": "Raise",
@@ -14,5 +13,13 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chyla95/Discord_bot-Hunters_Den.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chyla95/Discord_bot-Hunters_Den/issues"
+  },
+  "homepage": "https://github.com/chyla95/Discord_bot-Hunters_Den#readme"
 }
