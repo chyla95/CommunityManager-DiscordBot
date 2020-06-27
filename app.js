@@ -13,5 +13,8 @@ client.on('ready', () => {
 // Intialize command handler
 commandHandler(client);
 
-//client.login(process.env.token);
+
+//client.on('debug', (info) => console.log(info));
+//client.on('warn', (info) => console.log(info));
+client.on('error', (error) => console.log(error));
 client.login(token);

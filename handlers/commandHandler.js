@@ -32,23 +32,28 @@ module.exports = (client) => {
 
     // Commands
     client.on('message', msg => {
+
+        if(!msg.guild && msg.content === 'help') msg.reply('Help.');
+
         if (msg.author.bot) return;
-        if (!msg.guild) return;
-        if (!msg.content.startsWith(prefix)) return;
+        if (!msg.content.startsWith(prefix)) return;        
 
         const args = msg.content.trim().slice().toLowerCase().split(" ");
-        const userCommand = args.shift()
+        const userCommand = args.shift().substr(prefix.length);
 
-        // Check if command exists
+        // Check if command exists and if can be executed outside the guild (server)
         if (!client.commands.has(userCommand)) return;
+        if (!msg.guild && client.commands.get(userCommand).guildOnly) return
+
+        const commandObject = client.commands.get(userCommand);
 
         // Runs specific command
         try {
-            client.commands.get(userCommand).run(msg, args);
+            commandObject.run(msg, args);
         } catch (error) {
             console.log(error);
         }
 
-    });
+    });   
 
 };

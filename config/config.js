@@ -1,4 +1,6 @@
+const dotenv = require('dotenv').config();
+
 module.exports = {
-    token: 'NzI2MDcwMjIwNTczMjQ1NDYw.XvX7xg.XVOp99U-i_K_XYFgIv6wyH5mWUA',
+    token: process.env.token,
     prefix: '.'
 };
