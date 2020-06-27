@@ -8,32 +8,30 @@ const { prefix } = require('../config/config');
 
 
 module.exports = (client) => {
-    // Loading commands
+    // Loading commands from files
     console.log('----------------------------')
     client.commands = new Collection();
 
-    const commandFiles = readdirSync(path.join(__dirname, '..', 'commands')) // FIX        
+    const commandFileNames = readdirSync(path.join(__dirname, '..', 'commands'))       
         .filter((fileName) => {
             return fileName.endsWith('.js');
         });
 
-    commandFiles.forEach(file => {
-        const command = require(path.join(__dirname, '..', 'commands', file))
+    commandFileNames.forEach(fileName => {
+        const command = require(path.join(__dirname, '..', 'commands', fileName))
 
         if (command.name) {
             client.commands.set(command.name, command)
-            console.log(`LOADED: ${file}`)
+            console.log(`LOADED: ${fileName}`)
         }
         else {
-            console.log(`NOT LOADED: ${file}`)
+            console.log(`NOT LOADED: ${fileName}`)
         }
     });
     console.log('----------------------------')
 
-    // Commands
+    // Executing commands
     client.on('message', msg => {
-
-        if(!msg.guild && msg.content === 'help') msg.reply('Help.');
 
         if (msg.author.bot) return;
         if (!msg.content.startsWith(prefix)) return;        

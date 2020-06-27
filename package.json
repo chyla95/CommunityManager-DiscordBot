@@ -2,9 +2,9 @@
   "name": "hunters-den",
   "version": "1.0.0",
   "description": "Hunter's Den Community support",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "Raise",
   "license": "ISC",
