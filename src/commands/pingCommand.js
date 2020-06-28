@@ -5,7 +5,7 @@ module.exports = {
     description: 'Test command.',
     parameters: null,
     guildOnly: true,
-    allowedUserRoles: ['Member', "Staff"], // Require atleast one
+    allowedUserRoles: ["Staff"], // Require atleast one
 
     run(msg, args) {  
         const embed = new MessageEmbed()

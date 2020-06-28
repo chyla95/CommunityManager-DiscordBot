@@ -5,7 +5,7 @@ module.exports = {
     description: 'List of available commands.',
     parameters: '[command name]',
     guildOnly: false,
-    allowedUserRoles: null, // Require atleast one
+    allowedUserRoles: ["Staff"], // or null
 
     run(msg, args) {
         const { commands } = msg.client;
