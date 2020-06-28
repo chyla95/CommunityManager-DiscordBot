@@ -1,39 +1,47 @@
 const discord = require("discord.js");
-const discordEvents = discord.Constants.Events;
 
+const config = require('../config/config');
+
+
+const discordEvents = discord.Constants.Events;
 let cooldowns = [];
-const cooldown = 1000*60*2;
+const cooldownTime = 1000 * 60 * 10;
 
 module.exports = {
     name: discordEvents.MESSAGE_REACTION_ADD,
 
     async run(reaction, user) {
+        const msg = reaction.message;
+        const client = user.client;
 
         if (user.bot) return;
-        const allowedMsgId = user.client.boostRequestEmbeds;
-        const msg = reaction.message;
-        if (!allowedMsgId.includes(msg.id)) return;
-        if (reaction._emoji.name != "📩") return reaction.remove();
-        if(cooldowns.includes(user.id)){
-            user.send(`Sorry ${user.toString()}, you can't use the boost-requesting function, please wait ${cooldown/(1000*60)} min before using it again.`);
-            return msg.reactions.resolve("📩").users.remove(user);
+        // Fetching the full msg data
+        if (msg.partial) await msg.fetch(); //if (reaction.partial) await reaction.fetch();         
+
+        if (!msg.embeds.find(embed => { return embed.title === config.boostRequest_RequestEmbedTitle })) return;
+        if (reaction._emoji.name != config.boostRequest_RequestEmoji) return reaction.remove();
+        if (cooldowns.includes(user.id)) {
+            user.send(`Sorry, you can't use the **boost-requesting** function, please wait ${cooldownTime / (1000 * 60)} minute(s) before using it again.`);
+            return msg.reactions.resolve(config.boostRequest_RequestEmoji).users.remove(user);
         }
 
-        // Fetching the full msg data
-        if (reaction.message.partial) await reaction.message.fetch();
-        //if (reaction.partial) await reaction.fetch();     
 
-        user.client.channels.fetch('726584350774263868')
+        client.channels.fetch(config.boostRequest_RequestNotificationChannelId)
             .then(channel => {
-                const embed = new discord.MessageEmbed()
-                    .setTitle('Boost request')
-                    .setDescription(`${user.toString()} requested a boost. \n React with 🔒 to lock the request.`)
-                    .addField('Status ', 'Open')
-                    .setColor(0x00fc17);
-                return channel.send(embed);
+                return channel.send('@here');
             })
-            .then((botMsg) => {                
-                return botMsg.react('🔒');
+            .then((msg) => {
+                const embed = new discord.MessageEmbed()
+                    .setTitle(config.boostRequest_LockEmbedTitle)
+                    .setThumbnail(user.avatarURL())
+                    .setDescription(`A boost request was placed by ${user.toString()}. \n React with ${config.boostRequest_LockEmoji} to lock the request.`)
+                    .addField('Status ', 'Open')
+                    //.setTimestamp()
+                    .setColor(0x00fc17);
+                return msg.channel.send(embed);
+            })
+            .then((botMsg) => {
+                return botMsg.react(config.boostRequest_LockEmoji);
             })
             .then(() => {
                 return user.send(`Hey ${user.toString()}, your request has been registered. \nWe will contact you soon :)`);
@@ -42,11 +50,14 @@ module.exports = {
                 cooldowns.push(user.id);
                 setTimeout(() => {
                     cooldowns = cooldowns.filter(cd => cd !== user.id);
-                    console.log(cooldowns);
-                }, cooldown)
+                }, cooldownTime)
 
-                return msg.reactions.resolve("📩").users.remove(user);
+                return msg.reactions.resolve(config.boostRequest_RequestEmoji).users.remove(user);
             })
             .catch(console.error);
     }
 }
+
+// msg.embeds.forEach(embed => {
+//     if (embed.title !== config.boostRequest_RequestEmbedTitle) return;
+// });

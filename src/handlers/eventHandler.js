@@ -6,7 +6,7 @@ const path = require('path');
 
 module.exports = (client) => {
     // Loading events from files
-    console.log('EVENTS----------------------')
+    console.log('LOADING Events...')
 
     const eventsFileNames = readdirSync(path.join(__dirname, '..', 'events'))
         .filter((fileName) => {
@@ -19,13 +19,11 @@ module.exports = (client) => {
 
         if (event.name && event.run && typeof event.run == 'function' && discordEvents.includes(event.name)) {
             client.on(event.name, event.run);
-            console.log(`LOADED: ${fileName}`)
+            console.log(`✅ - ${fileName}`)
         } else {
-            console.log(`NOT LOADED: ${fileName}`)
+            console.log(`❌ - ${fileName}`)
         }
 
 
     });
-    console.log('----------------------------')
-
 }

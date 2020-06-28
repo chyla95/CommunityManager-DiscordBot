@@ -7,11 +7,14 @@ module.exports = {
     guildOnly: true,
     allowedUserRoles: ["Staff"], // Require atleast one
 
-    run(msg, args) {  
+    run(msg, args) {
         const embed = new MessageEmbed()
             .setTitle('Pong')
             .setColor(0xF340B9)
             .setDescription(msg.author.toString() + ', this is an example embed message.');
-        msg.channel.send(embed);
+        msg.channel.send("@here")
+        .then((res) => {
+            msg.channel.send(embed);
+        })        
     }
 };

@@ -7,8 +7,10 @@ const { prefix } = require('../config/config');
 
 
 module.exports = (client) => {
+
+
     // Loading commands from files
-    console.log('COMMANDS--------------------')
+    console.log('LOADING COMMANDS...')
     client.commands = new Collection();
     
     const commandsFileNames = readdirSync(path.join(__dirname, '..', 'commands'))
@@ -21,15 +23,15 @@ module.exports = (client) => {
 
         if (command.name && command.run && typeof command.run == 'function') {
             client.commands.set(command.name, command)
-            console.log(`LOADED: ${fileName}`)
+            console.log(`✅ - ${fileName}`)
         }
         else {
-            console.log(`NOT LOADED: ${fileName}`)
+            console.log(`❌ - ${fileName}`)
         }
     });
-    console.log('----------------------------')
 
-    // Executing commands
+
+    // Executing/handling commands
     client.on('message', msg => {
 
         // Check if prefix match and if user is not a bot
