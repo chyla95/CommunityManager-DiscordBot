@@ -1,6 +1,6 @@
 const { prefix } = require('../config/config');
 
-module.exports = {
+module.exports = { 
     name: 'help',
     description: 'List of available commands.',
     parameters: '[command name]',
