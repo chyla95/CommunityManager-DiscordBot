@@ -15,7 +15,7 @@ module.exports = {
         if (!allowedMsgId.includes(msg.id)) return;
         if (reaction._emoji.name != "📩") return reaction.remove();
         if(cooldowns.includes(user.id)){
-            user.send(`Sorry ${user.toString()}, you can't use the boost-requesting tool more often than every ${cooldown/(1000*60)} min.`);
+            user.send(`Sorry ${user.toString()}, you can't use the boost-requesting function, please wait ${cooldown/(1000*60)} min before using it again.`);
             return msg.reactions.resolve("📩").users.remove(user);
         }
 

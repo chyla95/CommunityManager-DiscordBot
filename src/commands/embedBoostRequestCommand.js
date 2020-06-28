@@ -15,7 +15,7 @@ module.exports = {
         msg.delete();
         const embed = new discord.MessageEmbed()
             .setTitle('Request a boost')
-            .setDescription(`To request a boost, react with 📩\nWe are gonna contact you shortly after that.`)
+            .setDescription(`To request a boost, react with 📩\nWe will contact you shortly after.`)
             .setFooter('Hunter\'s Den', 'https://lh6.googleusercontent.com/1D-cFfU1vcrtgqoe7pevejikxtg3yK37bF6MuJN-t5XX_leOAOwVL5YGhQ3me47EKocXbCpq-gi0IUc6EGhP=w1119-h947')
             .setColor(0x0096fa);
         msg.channel.send(embed)
