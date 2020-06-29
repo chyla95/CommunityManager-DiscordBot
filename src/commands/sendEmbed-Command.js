@@ -5,7 +5,7 @@ module.exports = {
     description: 'Send an embed message to the selected channel.',
     parameters: '[title]* [message]* [HEX color]',
     guildOnly: true,
-    allowedUserRoles: ["Staff"], // Require atleast one
+    allowedUserRoles: null, // Require atleast one
 
     async run(msg, args) {
 
