@@ -22,7 +22,7 @@ module.exports = (client) => {
         const command = require(path.join(__dirname, '..', 'commands', fileName))
 
         if (command.name && command.run && typeof command.run == 'function') {
-            client.commands.set(command.name, command)
+            client.commands.set(command.name.toLowerCase(), command)
             console.log(`✅ - ${fileName}`)
         }
         else {

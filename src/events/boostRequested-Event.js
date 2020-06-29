@@ -16,7 +16,9 @@ module.exports = {
 
         if (user.bot) return;
         // Fetching the full msg data
-        if (msg.partial) await msg.fetch(); //if (reaction.partial) await reaction.fetch();         
+        if (msg.partial) await msg.fetch();
+        if (reaction.partial) await reaction.fetch();
+        if (user.partial) await user.fetch();
 
         if (!msg.embeds.find(embed => { return embed.title === config.boostRequest_RequestEmbedTitle })) return;
         if (reaction._emoji.name != config.boostRequest_RequestEmoji) return reaction.remove();
@@ -24,7 +26,6 @@ module.exports = {
             user.send(`Sorry, you can't use the **boost-requesting** function, please wait ${cooldownTime / (1000 * 60)} minute(s) before using it again.`);
             return msg.reactions.resolve(config.boostRequest_RequestEmoji).users.remove(user);
         }
-
 
         client.channels.fetch(config.boostRequest_RequestNotificationChannelId)
             .then(channel => {
@@ -51,6 +52,14 @@ module.exports = {
                 setTimeout(() => {
                     cooldowns = cooldowns.filter(cd => cd !== user.id);
                 }, cooldownTime)
+
+                // TESTING TESTING TESTING
+                const boostRequestNotificationChannel = client.channels.cache.get(config.boostRequest_RequestNotificationChannelId);
+                msg.guild.members.fetch(user.id)
+                    .then((guildMember) => {
+                        boostRequestNotificationChannel.send(`**Buyer's tag:** ${guildMember.toString()} *(This field is for testing purposes only and will be removed in the future)*`);
+                    })
+                //
 
                 return msg.reactions.resolve(config.boostRequest_RequestEmoji).users.remove(user);
             })

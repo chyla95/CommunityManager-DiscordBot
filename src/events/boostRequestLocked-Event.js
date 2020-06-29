@@ -13,7 +13,9 @@ module.exports = {
 
         if (user.bot) return;
         // Fetching the full msg data
-        if (msg.partial) await msg.fetch(); //if (reaction.partial) await reaction.fetch();         
+        if (msg.partial) await msg.fetch(); 
+        if (reaction.partial) await reaction.fetch();       
+        if (user.partial) await user.fetch();   
 
         const fetchedEmbed = msg.embeds.find(embed => { return embed.title === config.boostRequest_LockEmbedTitle })
         if (!fetchedEmbed) return;
