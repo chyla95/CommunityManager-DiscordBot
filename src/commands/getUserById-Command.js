@@ -1,7 +1,7 @@
 const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    name: 'getUseById',
+    name: 'getUserById',
     description: 'Prints user\'s discord tag based on his user ID.',
     parameters: '<user ID>',
     guildOnly: false,
