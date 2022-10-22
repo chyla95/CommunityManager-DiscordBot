@@ -4,7 +4,7 @@
   "description": "Hunter's Den Community support",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start:dev": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
