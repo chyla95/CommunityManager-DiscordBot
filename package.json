@@ -1,26 +1,17 @@
 {
-  "name": "hunters-den",
+  "name": "community-manager-discord-bot",
   "version": "1.0.0",
   "description": "Hunter's Den Community support",
-  "main": "src/app.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/app.js"
+    "start": "nodemon src/index.js"
   },
-  "author": "Raise",
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
-  },
   "devDependencies": {
     "nodemon": "^2.0.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chyla95/Discord_bot-Hunters_Den.git"
-  },
-  "bugs": {
-    "url": "https://github.com/chyla95/Discord_bot-Hunters_Den/issues"
-  },
-  "homepage": "https://github.com/chyla95/Discord_bot-Hunters_Den#readme"
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
 }
