@@ -13,12 +13,12 @@ module.exports = (client) => {
             return fileName.endsWith('.js');
         });
 
-    const discordEvents = Object.values(discord.Constants.Events);
+    const discordEvents = Object.values(discord.Events);
     eventsFileNames.forEach(fileName => {
         const event = require(path.join(__dirname, '..', 'events', fileName))
 
-        if (event.name && event.run && typeof event.run == 'function' && discordEvents.includes(event.name)) {
-            client.on(event.name, event.run);
+        if (event.trigger && event.run &&  discordEvents.includes(event.trigger)) {
+            client.on(event.trigger, event.run);
             console.log(`✅ - ${fileName}`)
         } else {
             console.log(`❌ - ${fileName}`)

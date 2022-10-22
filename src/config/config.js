@@ -1,7 +1,4 @@
-const dotenv = require('dotenv').config();
-
 module.exports = {
-    token: process.env.token,
     prefix: '.',
     boostRequest_RequestEmoji: '📩',
     boostRequest_RequestEmbedTitle:'Request a boost',
