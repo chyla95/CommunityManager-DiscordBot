@@ -32,7 +32,7 @@ module.exports = (client) => {
 
 
     // Executing/handling commands
-    client.on('message', msg => {
+    client.on('messageCreate', msg => {
 
         // Check if prefix match and if user is not a bot
         if (!msg.content.startsWith(prefix)) return;
