@@ -6,5 +6,5 @@ export abstract class CommandBase {
   abstract readonly isOnlyAllowedGuild: boolean;
   abstract readonly allowedRoleIds: string[] | undefined;
 
-  abstract run(message: Message, args: string[] | undefined): Promise<void>;
+  abstract execute(message: Message, args: string[] | undefined): Promise<void>;
 }

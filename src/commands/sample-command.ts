@@ -8,7 +8,7 @@ export default class SampleCommand extends CommandBase {
   readonly isOnlyAllowedGuild = false;
   readonly allowedRoleIds = [Roles.Administrator];
 
-  async run(message: Message, args: string[] | undefined) {
+  async execute(message: Message, args: string[] | undefined) {
     console.log(`Sample Command Triggered By ${message.member?.user.username}, With The Following Args: ${args}.`);
   }
 }

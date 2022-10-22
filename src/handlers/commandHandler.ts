@@ -10,23 +10,34 @@ export const loadCommands = async (client: Client) => {
   // Loading commands from files
   console.info("Loading Commands...");
 
-  const commandsDirectory = await fs.readdir(path.join(__dirname, "..", "commands"));
-  const commandsFiles = commandsDirectory.filter((fileName: string) => {
+  // Load Dir
+  let commandsDirectory: any;
+  try {
+    commandsDirectory = await fs.readdir(path.join(__dirname, "..", "commands"));
+  } catch (error) {
+    throw new Error(`Could Not Load Commands Directory!`);
+  }
+
+  // Load Files
+  const commandFiles = commandsDirectory.filter((fileName: string) => {
     return fileName.endsWith(".ts");
   });
 
-  await commandsFiles.forEach(async (fileName: string) => {
+  for await (const commandFile of commandFiles) {
+    let commandRaw: any;
     try {
-      const commandRaw = await import(path.join(__dirname, "..", "commands", fileName));
-      if (!commandRaw.default) return;
-      const command: CommandBase = new commandRaw.default();
-
-      commands.push(command);
-      console.log(` ⤷ ${fileName}`);
+      commandRaw = await import(path.join(__dirname, "..", "commands", commandFile));
     } catch (error) {
-      throw new Error(`Could Not Load: ${fileName}!`);
+      throw new Error(`Could Not Load Command File: ${commandFile}!`);
     }
-  });
+
+    if (!commandRaw.default) continue;
+    const command: CommandBase = new commandRaw.default();
+
+    // Populate commands array
+    commands.push(command);
+    console.log(` ⤷ ${commandFile}`);
+  }
 
   // Executing/handling commands
   client.on("messageCreate", async (message: Message) => {
@@ -67,7 +78,7 @@ export const loadCommands = async (client: Client) => {
 
     // Run specific command
     try {
-      command.run(message, commandArgs);
+      command.execute(message, commandArgs);
     } catch (error) {
       console.error(error);
     }
