@@ -1,7 +1,7 @@
 {
   "name": "community-manager-discord-bot",
   "version": "1.0.0",
-  "description": "Hunter's Den Community support",
+  "description": "",
   "main": "src/index.ts",
   "scripts": {
     "start:dev": "nodemon src/index.ts"
