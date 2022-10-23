@@ -1,7 +1,7 @@
 import { createPath } from "../utilities/create-path";
 import { Client, Message, Role } from "discord.js";
 import { CommandBase } from "../bot-commands/command-base";
-import { baseConfiguration } from "../configuration/configuration";
+import { configuration } from "../configuration/configuration";
 import { getDirectoryFileNames, importFileContent } from "../utilities/dynamic-imports";
 
 const commands: CommandBase[] = [];
@@ -27,12 +27,12 @@ export const loadCommands = async (client: Client) => {
   // Handling Commands
   client.on("messageCreate", async (message: Message) => {
     // Check if prefix match and if user is not a bot
-    if (!message.content.startsWith(baseConfiguration.prefix)) return;
+    if (!message.content.startsWith(configuration.prefix)) return;
     if (message.author.bot) return;
 
     // Prepare commandName and parameters to be used
     const commandArgs = message.content.trim().slice().toLowerCase().split(" ");
-    const commandKeyWord = commandArgs.shift()!.substring(baseConfiguration.prefix.length);
+    const commandKeyWord = commandArgs.shift()!.substring(configuration.prefix.length);
 
     // Check if command exists
     const command = commands.find((command) => command.triggerKeyWord == commandKeyWord);

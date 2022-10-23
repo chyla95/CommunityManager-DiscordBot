@@ -1,3 +1,3 @@
-export const baseConfiguration = {
+export const configuration = {
   prefix: ".",
 };
