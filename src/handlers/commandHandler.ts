@@ -24,7 +24,10 @@ export const loadCommands = async (client: Client) => {
   }
   console.info(logMessage);
 
-  // Handling Commands
+  await handleCommands(client, commands);
+};
+
+const handleCommands = async (client: Client, commands: CommandBase[]) => {
   client.on("messageCreate", async (message: Message) => {
     // Check if prefix match and if user is not a bot
     if (!message.content.startsWith(configuration.prefix)) return;
@@ -53,15 +56,18 @@ export const loadCommands = async (client: Client) => {
         message.reply(`Command Can Only Be Used Inside a Guild (Cannot Verify User Roles)!`);
         return;
       }
-      command.allowedRoleIds.forEach((roleId) => {
-        if (!message.member!.roles.cache.find((role: Role) => role.id == roleId)) {
+
+      for (const roleId of command.allowedRoleIds) {
+        let roles = message.member.roles.cache;
+        const hasRole = roles.some((x) => x.id == roleId);
+        if (!hasRole) {
           message.reply(`You Do Not Have Sufficient Permissions (Roles) To Execute This Command!`);
           return;
         }
-      });
+      }
     }
 
-    // Run the command
+    // Execute the command
     try {
       command.execute(message, commandArgs);
     } catch (error) {
