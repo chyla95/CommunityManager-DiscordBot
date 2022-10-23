@@ -1,45 +1,31 @@
 import { promises as fs } from "fs";
-import path from "path";
+import { createPath } from "../utilities/create-path";
 import { Client, Message, Role } from "discord.js";
 import { CommandBase } from "../commands/command-base";
 import { baseConfiguration } from "../configuration/configuration";
+import { getDirectoryFileNames, importFileContent } from "../utilities/dynamic-imports";
 
 const commands: CommandBase[] = [];
 
 export const loadCommands = async (client: Client) => {
-  // Loading commands from files
-  console.info("Loading Commands...");
+  let logMessage = "Loaded Commands:";
 
-  // Load Dir
-  let commandsDirectory: any;
-  try {
-    commandsDirectory = await fs.readdir(path.join(__dirname, "..", "commands"));
-  } catch (error) {
-    throw new Error(`Could Not Load Commands Directory!`);
-  }
+  const commandsDirectoryPath = createPath([__dirname, "..", "commands"]);
+  let commandFileNames = await getDirectoryFileNames(commandsDirectoryPath);
 
-  // Load Files
-  const commandFiles = commandsDirectory.filter((fileName: string) => {
-    return fileName.endsWith(".ts");
-  });
+  for await (const commandFileName of commandFileNames) {
+    const commandFilePath = createPath([commandsDirectoryPath, commandFileName]);
+    let commandFileExportedMembers = await importFileContent(commandFilePath);
 
-  for await (const commandFile of commandFiles) {
-    let commandRaw: any;
-    try {
-      commandRaw = await import(path.join(__dirname, "..", "commands", commandFile));
-    } catch (error) {
-      throw new Error(`Could Not Load Command File: ${commandFile}!`);
-    }
+    if (!commandFileExportedMembers.default) continue;
+    const command: CommandBase = new commandFileExportedMembers.default();
 
-    if (!commandRaw.default) continue;
-    const command: CommandBase = new commandRaw.default();
-
-    // Populate commands array
     commands.push(command);
-    console.log(` ⤷ ${commandFile}`);
+    logMessage += `\n      -> ${commandFileName}`;
   }
+  console.info(logMessage);
 
-  // Executing/handling commands
+  // Handling Commands
   client.on("messageCreate", async (message: Message) => {
     // Check if prefix match and if user is not a bot
     if (!message.content.startsWith(baseConfiguration.prefix)) return;

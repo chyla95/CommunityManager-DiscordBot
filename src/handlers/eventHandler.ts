@@ -2,37 +2,24 @@ import { promises as fs } from "fs";
 import path from "path";
 import { Client } from "discord.js";
 import { EventBase } from "../events/event-base";
+import { createPath } from "../utilities/create-path";
+import { getDirectoryFileNames, importFileContent } from "../utilities/dynamic-imports";
 
 export const loadEvents = async (client: Client) => {
-  // Loading events from files
-  console.info("Loading Events...");
+  let logMessage = "Loaded Commands:";
 
-  // Load Dir
-  let eventsDirectory: any;
-  try {
-    eventsDirectory = await fs.readdir(path.join(__dirname, "..", "events"));
-  } catch (error) {
-    throw new Error(`Could Not Load Commands Directory!`);
-  }
+  const eventsDirectoryPath = createPath([__dirname, "..", "events"]);
+  let eventFileNames = await getDirectoryFileNames(eventsDirectoryPath);
 
-  // Load Files
-  const eventFiles = eventsDirectory.filter((fileName: string) => {
-    return fileName.endsWith(".ts");
-  });
+  for await (const eventFileName of eventFileNames) {
+    const eventFilePath = createPath([eventsDirectoryPath, eventFileName]);
+    let eventFileExportedMembers = await importFileContent(eventFilePath);
 
-  for await (const eventFile of eventFiles) {
-    let eventClass: any;
-    try {
-      eventClass = await import(path.join(__dirname, "..", "events", eventFile));
-    } catch (error) {
-      throw new Error(`Could Not Load Event File: ${eventFile}!` + error);
-    }
+    if (!eventFileExportedMembers.default) continue;
+    const event: EventBase = new eventFileExportedMembers.default();
 
-    if (!eventClass.default) continue;
-    const event: EventBase = new eventClass.default();
-
-    // Populate commands array
     client.on(event.triggerEvent.toString(), event.execute);
-    console.log(` ⤷ ${eventFile}`);
+    logMessage += `\n      -> ${eventFileName}`;
   }
+  console.info(logMessage);
 };
