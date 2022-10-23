@@ -10,7 +10,7 @@ It allows users to interact with the system from within the Discord application.
 Before starting the app, it is required to register it in [Discord Developer Portal](https://discord.com/developers/docs/intro), and obtain **OAuth2** credentials.
 Make sure to keep `client_id` and `client_secret` secure and handy.
 
-**Both keys**, along with **Bot's Token** (which can be created under the _Bot_ tab, on your _bot's profile_ in [Discord Developer Portal](https://discord.com/developers/docs/intro)), have to be provided as _Environment Variables_, with the following names, for the app to work:
+**Both keys**, along with **Bot's Token** (which can be created under _Bot_ tab, on your _bot's profile_ in [Discord Developer Portal](https://discord.com/developers/docs/intro)), have to be provided as _Environment Variables_, with the following names, for the app to work:
 | Variable Name | Key |
 |--|--|
 | `DISCORD_CLIENT_ID` | `client_id` |
