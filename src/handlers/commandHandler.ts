@@ -65,7 +65,8 @@ export const loadCommands = async (client: Client) => {
     try {
       command.execute(message, commandArgs);
     } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
+      console.error(error);
+      message.reply(`There Was an Error While Executing The Command!`);
     }
   });
 };
