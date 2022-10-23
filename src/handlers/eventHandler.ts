@@ -1,12 +1,12 @@
 import { Client } from "discord.js";
-import { EventBase } from "../events/event-base";
+import { EventBase } from "../bot-events/event-base";
 import { createPath } from "../utilities/create-path";
 import { getDirectoryFileNames, importFileContent } from "../utilities/dynamic-imports";
 
 export const loadEvents = async (client: Client) => {
   let logMessage = "Loaded Commands:";
 
-  const eventsDirectoryPath = createPath([__dirname, "..", "events"]);
+  const eventsDirectoryPath = createPath([__dirname, "..", "bot-events"]);
   let eventFileNames = await getDirectoryFileNames(eventsDirectoryPath);
 
   for await (const eventFileName of eventFileNames) {

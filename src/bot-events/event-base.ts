@@ -1,4 +1,4 @@
-import { Message, Events } from "discord.js";
+import { Events } from "discord.js";
 
 export abstract class EventBase {
   abstract readonly triggerEvent: Events;

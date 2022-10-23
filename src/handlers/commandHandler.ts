@@ -1,6 +1,6 @@
 import { createPath } from "../utilities/create-path";
 import { Client, Message, Role } from "discord.js";
-import { CommandBase } from "../commands/command-base";
+import { CommandBase } from "../bot-commands/command-base";
 import { baseConfiguration } from "../configuration/configuration";
 import { getDirectoryFileNames, importFileContent } from "../utilities/dynamic-imports";
 
@@ -9,7 +9,7 @@ const commands: CommandBase[] = [];
 export const loadCommands = async (client: Client) => {
   let logMessage = "Loaded Commands:";
 
-  const commandsDirectoryPath = createPath([__dirname, "..", "commands"]);
+  const commandsDirectoryPath = createPath([__dirname, "..", "bot-commands"]);
   let commandFileNames = await getDirectoryFileNames(commandsDirectoryPath);
 
   for await (const commandFileName of commandFileNames) {
