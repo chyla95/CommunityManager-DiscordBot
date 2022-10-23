@@ -50,7 +50,7 @@ export const loadCommands = async (client: Client) => {
     const commandKeyWord = commandArgs.shift()!.substring(baseConfiguration.prefix.length);
 
     // Check if command exists
-    const command = commands.find((command) => command.keyWord == commandKeyWord);
+    const command = commands.find((command) => command.triggerKeyWord == commandKeyWord);
     if (!command) {
       await message.reply(`Invalid Command!`);
       return;
