@@ -61,11 +61,11 @@ export const loadCommands = async (client: Client) => {
       });
     }
 
-    // Run specific command
+    // Run the command
     try {
       command.execute(message, commandArgs);
     } catch (error) {
-      console.error(error);
+      if (error instanceof Error) throw new Error(error.message);
     }
   });
 };
