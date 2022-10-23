@@ -3,7 +3,8 @@ import { SlashCommandBase } from "./slash-command-base";
 import { Roles } from "../utilities/roles";
 
 export default class SampleSlashCommand extends SlashCommandBase {
-  readonly allowedRoleIds = [Roles.Administrator];
+  readonly allowedRoleIds = undefined;
+  readonly isOnlyAllowedGuild = false;
   readonly data = new SlashCommandBuilder()
     .setName("sample")
     .setDescription("Sample command, used as a placeholder.")

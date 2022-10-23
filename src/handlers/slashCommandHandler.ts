@@ -38,10 +38,16 @@ const handleInteractions = async (client: Client, commands: SlashCommandBase[]) 
       return;
     }
 
+    // Check if command can be executed outside the guild (server)
+    if (!interaction.guild && command.isOnlyAllowedGuild) {
+      await interaction.reply({ content: `Command Can Only Be Used Inside a Guild!`, ephemeral: true });
+      return;
+    }
+
     // Check for sufficient user permissions
     if (command.allowedRoleIds) {
-      if (!interaction.member) {
-        await interaction.reply({ content: `Couldn't Verify User Roles!`, ephemeral: true });
+      if (!interaction.member || !interaction.guild) {
+        await interaction.reply({ content: `Command Can Only Be Used Inside a Guild (Cannot Verify User Roles)!`, ephemeral: true });
         return;
       }
 
