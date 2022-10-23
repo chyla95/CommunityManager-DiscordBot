@@ -1,5 +1,5 @@
 import { Message } from "discord.js";
-import { Roles } from "../utilities/Roles";
+import { Roles } from "../utilities/roles";
 import { CommandBase } from "./command-base";
 
 export default class SampleCommand extends CommandBase {
