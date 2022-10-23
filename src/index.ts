@@ -3,8 +3,6 @@ import { loadCommands } from "./handlers/commandHandler";
 import { loadEvents } from "./handlers/eventHandler";
 import { setupConsole } from "./utilities/setup-console";
 
-const eventHandler = require("./handlers/eventHandler");
-
 const client = new Client({
   intents: [
     GatewayIntentBits.GuildMessages,
