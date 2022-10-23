@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits, Partials } from "discord.js";
 import { loadCommands } from "./handlers/commandHandler";
+import { loadEvents } from "./handlers/eventHandler";
 import { setupConsole } from "./utilities/setup-console";
 
 const eventHandler = require("./handlers/eventHandler");
@@ -24,7 +25,7 @@ const startApp = async () => {
   }
 
   await loadCommands(client);
-  await eventHandler(client);
+  await loadEvents(client);
 
   client.on("warn", (info) => console.warn(info));
   client.on("error", (error) => console.error(error));
