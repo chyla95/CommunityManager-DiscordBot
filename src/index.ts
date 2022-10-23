@@ -16,8 +16,13 @@ const client = new Client({
   partials: [Partials.Channel],
 });
 
+setupConsole();
+
 const startApp = async () => {
-  setupConsole();
+  if (!process.env.DISCORD_BOT_TOKEN) {
+    throw new Error("DISCORD_BOT_TOKEN is not defined!");
+  }
+
   await loadCommands(client);
   await eventHandler(client);
 
@@ -26,7 +31,6 @@ const startApp = async () => {
   client.on("ready", () => {
     console.info(`The Bot is running`);
   });
-
   client.login(process.env.DISCORD_BOT_TOKEN);
 };
 startApp();
