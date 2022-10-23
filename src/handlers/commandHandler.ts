@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { Client, Message, Role } from "discord.js";
 import { CommandBase } from "../commands/command-base";
-import { baseConfiguration } from "../configuration/base-configuration";
+import { baseConfiguration } from "../configuration/configuration";
 
 const commands: CommandBase[] = [];
 
