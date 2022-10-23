@@ -1,5 +1,3 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { Client } from "discord.js";
 import { EventBase } from "../events/event-base";
 import { createPath } from "../utilities/create-path";

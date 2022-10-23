@@ -1,4 +1,3 @@
-import { promises as fs } from "fs";
 import { createPath } from "../utilities/create-path";
 import { Client, Message, Role } from "discord.js";
 import { CommandBase } from "../commands/command-base";
