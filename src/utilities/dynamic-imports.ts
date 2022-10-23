@@ -9,7 +9,7 @@ export const getDirectoryFileNames = async (directoryPath: string) => {
   }
 
   const fileNamesFiltered = fileNames.filter((fileName: string) => {
-    return fileName.endsWith(".ts");
+    return fileName.endsWith(".ts") || fileName.endsWith(".js");
   });
   return fileNamesFiltered;
 };
