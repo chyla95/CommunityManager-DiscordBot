@@ -23,6 +23,14 @@ const startApp = async () => {
     throw new Error("DISCORD_BOT_TOKEN is not defined!");
   }
 
+  if (!process.env.DISCORD_BOT_SECRET) {
+    throw new Error("DISCORD_BOT_SECRET is not defined!");
+  }
+
+  if (!process.env.DISCORD_CLIENT_ID) {
+    throw new Error("DISCORD_CLIENT_ID is not defined!");
+  }
+
   await loadCommands(client);
   await loadEvents(client);
   await loadSlashCommands(client);
